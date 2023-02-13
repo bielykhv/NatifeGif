@@ -7,11 +7,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ActivityViewModel @Inject constructor(private val getGifListFromDataBaseUseCase: GetGifListFromDataBaseUseCase): ViewModel() {
-//    var gifList = MutableLiveData<List<GifData>>()
-var gifList: LiveData<List<GifData>> = getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData()
 
-    fun getGifList() = viewModelScope.launch {
-//        gifList.value = getGifListFromDataBaseUseCase.getGifListFromDb()
-    }
+val gifList: LiveData<List<GifData>> = getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData()
+
+
 
 }

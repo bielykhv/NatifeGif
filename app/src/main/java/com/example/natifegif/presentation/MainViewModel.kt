@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
     var state = MutableLiveData<String>()
     var philterModelList = MutableLiveData<List<GifData>>()
     private var offset = 0
-    var gifList: LiveData<List<GifData>> = getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData()
+    val gifList: LiveData<List<GifData>> = getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData()
     init {
         getItem()
     }
