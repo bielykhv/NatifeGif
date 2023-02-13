@@ -13,18 +13,19 @@ import dagger.Provides
 
 @Module
 interface DataModule {
-
+    @ApplicationScope
     @Binds
     fun bindRepository(impl: RepositoryImpl): Repository
 
 
     companion object {
+        @ApplicationScope
         @Provides
         fun provideDao(application: Application): Dao {
             return MainDb.getDataBase(application).getDao()
 
         }
-
+        @ApplicationScope
         @Provides
         fun provideApiService(): ApiService {
             return ApiFactory.apiService

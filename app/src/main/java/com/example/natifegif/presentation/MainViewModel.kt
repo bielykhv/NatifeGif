@@ -29,7 +29,9 @@ class MainViewModel @Inject constructor(
     var philterModelList = MutableLiveData<List<GifData>>()
     private var offset = 0
     var gifList = MutableLiveData<List<GifData>>()
-
+    init {
+        getItem()
+    }
     fun getItem() = viewModelScope.launch {
         try {
             val gif = getDataFromNetUseCase.getDataFromNet("3", offset.toString())

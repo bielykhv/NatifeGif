@@ -5,7 +5,7 @@ import com.example.natifegif.presentation.GifActivity
 import com.example.natifegif.presentation.GifListFragment
 import dagger.BindsInstance
 import dagger.Component
-
+@ApplicationScope
 @Component(modules = [DataModule::class, ViewModelModule::class])
 interface ApplicationComponent {
 
