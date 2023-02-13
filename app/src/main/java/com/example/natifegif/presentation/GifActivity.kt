@@ -33,7 +33,6 @@ class GifActivity : AppCompatActivity() {
         setContentView(binding.root)
         model = ViewModelProvider(this, viewModelFactory)[ActivityViewModel::class.java]
         onSwipeTouchListener = OnSwipeTouchListener(binding.imageView, this)
-        model.getGifList()
         id = intent.getStringExtra("id")!!
         model.gifList.observe(this) {
             if (index1 == -1){

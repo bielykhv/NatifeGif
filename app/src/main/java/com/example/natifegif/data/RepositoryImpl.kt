@@ -6,6 +6,7 @@ import com.example.natifegif.data.network.Gif
 import com.example.natifegif.data.database.GifData
 import com.example.natifegif.data.network.ApiService
 import com.example.natifegif.domain.Repository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val apiService: ApiService, private val mainDb: Dao): Repository {
@@ -21,7 +22,7 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService, pri
         mainDb.insertDeleted(deletedItem)
     }
 
-    override suspend fun getListFromDb(): List<GifData> {
+    override fun getListFromDb(): Flow<List<GifData>> {
         return mainDb.getAllGifs()
     }
 

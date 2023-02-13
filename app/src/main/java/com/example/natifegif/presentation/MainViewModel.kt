@@ -2,9 +2,7 @@ package com.example.natifegif.presentation
 
 import android.os.Environment
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.natifegif.data.database.DeletedItem
 import com.example.natifegif.data.database.GifData
 import com.example.natifegif.domain.*
@@ -28,7 +26,7 @@ class MainViewModel @Inject constructor(
     var state = MutableLiveData<String>()
     var philterModelList = MutableLiveData<List<GifData>>()
     private var offset = 0
-    var gifList = MutableLiveData<List<GifData>>()
+    var gifList: LiveData<List<GifData>> = getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData()
     init {
         getItem()
     }
@@ -44,13 +42,9 @@ class MainViewModel @Inject constructor(
         } catch (e: Exception) {
             state.value = e.toString()
         }
-        getGifList()
     }
 
 
-    private fun getGifList() = viewModelScope.launch {
-        gifList.value = getGifListFromDataBaseUseCase.getGifListFromDb()
-    }
 
     fun stateValue() {
         state.value = ""
@@ -62,7 +56,7 @@ class MainViewModel @Inject constructor(
 
     fun deleteGif(id: String) = viewModelScope.launch {
         deleteGifFromDataBaseUseCase.deleteGifFormDb(id)
-        getGifList()
+
     }
 
     fun insertDeleted(gifData: GifData) = viewModelScope.launch {
@@ -103,7 +97,6 @@ class MainViewModel @Inject constructor(
                     if (!deleteList.contains(gifData))
                         insertGifToDataBaseUseCase.insertGifToDb(gifData)
                 }
-                getGifList()
             } catch (e: IOException) {
                 Log.d("TAG", "Error: $e")
             }
