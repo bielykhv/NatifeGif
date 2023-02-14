@@ -26,11 +26,10 @@ class MainViewModel @Inject constructor(
     var state = MutableLiveData<String>()
     var philterModelList = MutableLiveData<List<GifData>>()
     private var offset = 0
+
     val gifList: LiveData<List<GifData>> by lazy { getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData() }
 
-    init {
-        getItem()
-    }
+
     fun getItem() = viewModelScope.launch {
         try {
             val gif = getDataFromNetUseCase.getDataFromNet("3", offset.toString())

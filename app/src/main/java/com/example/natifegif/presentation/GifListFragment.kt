@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -63,6 +64,8 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
         model.state.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 model.gifList.observe(viewLifecycleOwner) { list ->
+                    if (list.isEmpty()) model.getItem()
+                    Log.d("MyLog", list.size.toString())
                     adapter.submitList(list)
 
                 }
@@ -73,7 +76,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                 }
             }
         }
-
 
 
     }
@@ -92,7 +94,7 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
         binding.apply {
             fragToolbar.inflateMenu(R.menu.frag_tool_menu)
             val findItem = fragToolbar.menu.findItem(R.id.new_item)
-            edText = findItem.actionView.findViewById(R.id.findGif) as EditText
+            edText = findItem.actionView?.findViewById(R.id.findGif) as EditText
             findItem.setOnActionExpandListener(expandActionView())
             textWatcher = textWatcher()
         }
@@ -100,12 +102,12 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
 
     private fun expandActionView(): MenuItem.OnActionExpandListener {
         return object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+            override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
                 edText?.addTextChangedListener(textWatcher)
-                return true
+              return true
             }
 
-            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+            override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
                 edText?.removeTextChangedListener(textWatcher)
                 edText?.setText("")
                 model.gifList.observe(viewLifecycleOwner) {
