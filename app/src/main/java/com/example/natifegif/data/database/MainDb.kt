@@ -12,13 +12,20 @@ abstract class MainDb : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: MainDb? = null
-        fun getDataBase(context: Context): MainDb {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext, MainDb::class.java, "main_db"
-                ).build()
-                instance
+        private const val DB_NAME = "main_db"
 
+        fun getDataBase(context: Context): MainDb {
+            INSTANCE?.let {
+                return it
+            }
+            synchronized(this){
+                INSTANCE?.let {
+                    return it
+                }
+                val db = Room.databaseBuilder(context.applicationContext,MainDb::class.java, DB_NAME)
+                    .build()
+                INSTANCE = db
+                return db
             }
 
         }
