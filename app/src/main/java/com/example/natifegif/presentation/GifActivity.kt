@@ -2,7 +2,6 @@ package com.example.natifegif.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -19,7 +18,7 @@ class GifActivity : AppCompatActivity() {
     private var id: String = ""
     private var index: Int = 0
     private var index1: Int = -1
-    var list = mutableListOf<GifData>()
+    private var list = mutableListOf<GifData>()
     private val binding by lazy {
         ActivityGifBinding.inflate(layoutInflater)
     }
@@ -64,7 +63,6 @@ class GifActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt("index", index1)
         super.onSaveInstanceState(outState)
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -72,19 +70,15 @@ class GifActivity : AppCompatActivity() {
         binding.imageView.setOnTouchListener(
             object : View.OnTouchListener {
                 private val gestureDetector = GestureDetector(this@GifActivity, GestureListener())
-
                 override fun onTouch(view: View, event: MotionEvent): Boolean {
                     return gestureDetector.onTouchEvent(event)
                 }
-
                 inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
                     private val SWIPE_THRESHOLD = 100
                     private val SWIPE_VELOCITY_THRESHOLD = 100
-
                     override fun onDown(e: MotionEvent): Boolean {
                         return true
                     }
-
                     override fun onFling(
                         e1: MotionEvent,
                         e2: MotionEvent,
@@ -93,7 +87,8 @@ class GifActivity : AppCompatActivity() {
                     ): Boolean {
                         val diffX = e2.x - e1.x
                         val diffY = e2.y - e1.y
-                        if (abs(diffX) > abs(diffY) && abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (abs(diffX) > abs(diffY) && abs(diffX) > SWIPE_THRESHOLD
+                            && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffX > 0) {
                                 if (index1 == 0) index1 = list.size
                                 --index1
