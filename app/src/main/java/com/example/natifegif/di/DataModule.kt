@@ -17,7 +17,6 @@ interface DataModule {
     @Binds
     fun bindRepository(impl: RepositoryImpl): Repository
 
-
     companion object {
         @ApplicationScope
         @Provides

@@ -8,6 +8,4 @@ class Images {
     @SerializedName("original")
     @Expose
     var original: Original? = null
-
-
 }

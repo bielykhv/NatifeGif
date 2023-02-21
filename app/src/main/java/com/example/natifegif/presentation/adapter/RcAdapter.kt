@@ -14,7 +14,6 @@ import com.example.natifegif.databinding.GifItemBinding
 import com.example.natifegif.data.database.GifData
 import java.io.File
 
-
 class RcAdapter(private val listener: Listener, private val context: Context) :
     ListAdapter<GifData, RcAdapter.MyHolder>(ItemComparator()) {
     class MyHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -22,17 +21,13 @@ class RcAdapter(private val listener: Listener, private val context: Context) :
             val binding = GifItemBinding.bind(view)
             with(binding){
                 Glide.with(context).asGif()
-                    .load(Uri.fromFile(File(gifData.url!!))).into(mainImage)
-
+                    .load(Uri.fromFile(gifData.url?.let { File(it) })).into(mainImage)
                 tvTitle.text = gifData.title
                 mainImage.setOnClickListener {
                     listener.onClickItem(gifData)
                 }
             }
-
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -42,24 +37,17 @@ class RcAdapter(private val listener: Listener, private val context: Context) :
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         getItem(position)?.let { holder.setData(it, listener, context) }
-
-
-    }
-
-    interface Listener {
-        fun onClickItem(gifData: GifData)
-
     }
 
     class ItemComparator : DiffUtil.ItemCallback<GifData>() {
         override fun areItemsTheSame(oldItem: GifData, newItem: GifData): Boolean {
             return oldItem.id == newItem.id
         }
-
         override fun areContentsTheSame(oldItem: GifData, newItem: GifData): Boolean {
             return oldItem == newItem
         }
     }
-
-
+    interface Listener {
+        fun onClickItem(gifData: GifData)
+    }
 }

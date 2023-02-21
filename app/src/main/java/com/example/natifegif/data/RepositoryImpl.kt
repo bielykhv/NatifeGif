@@ -26,7 +26,6 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService, pri
         return mainDb.getAllGifs()
     }
 
-
     override suspend fun getDeletedGifListFromDb(): List<GifData> {
         return mainDb.getAllDeleted()
     }

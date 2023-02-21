@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     }
     private fun permissionListener() {
         resultLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-
             Toast.makeText(this, "Swipe up to load gifs", Toast.LENGTH_LONG).show()
         }
     }
@@ -33,18 +32,12 @@ class MainActivity : AppCompatActivity() {
         if (!isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             permissionListener()
             resultLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
         }
     }
-
     private fun isPermissionGranted(p: String): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             p
         ) == PackageManager.PERMISSION_GRANTED
     }
-
-
-
-
 }

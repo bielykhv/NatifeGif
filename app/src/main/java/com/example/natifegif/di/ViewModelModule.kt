@@ -14,7 +14,6 @@ interface ViewModelModule {
     @ViewModelKey(MainViewModel::class)
     fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
-
     @Binds
     @IntoMap
     @ViewModelKey(ActivityViewModel::class)

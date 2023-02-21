@@ -26,25 +26,23 @@ class MainViewModel @Inject constructor(
     var state = MutableLiveData<String>()
     var philterModelList = MutableLiveData<List<GifData>>()
     private var offset = 0
-
     val gifList: LiveData<List<GifData>> by lazy { getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData() }
-
-
     fun getItem() = viewModelScope.launch {
         try {
             val gif = getDataFromNetUseCase.getDataFromNet("3", offset.toString())
             offset += 3
             gif.data?.forEach {
                 val url = it.images?.original?.url
-                saveGifIntoInternal(it.id!!, it.title!!, url!!)
+                it.id?.let { it1 -> it.title?.let { it2 ->
+                    if (url != null) {
+                        saveGifIntoInternal(it1, it2, url)
+                    }
+                } }
             }
-
         } catch (e: Exception) {
             state.value = e.toString()
         }
     }
-
-
 
     fun stateValue() {
         state.value = ""
@@ -56,7 +54,6 @@ class MainViewModel @Inject constructor(
 
     fun deleteGif(id: String) = viewModelScope.launch {
         deleteGifFromDataBaseUseCase.deleteGifFormDb(id)
-
     }
 
     fun insertDeleted(gifData: GifData) = viewModelScope.launch {

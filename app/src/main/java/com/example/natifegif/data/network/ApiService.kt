@@ -11,8 +11,6 @@ interface ApiService {
         @Query(QUERY_PARAM_OFFSET) offset: String = ""
     ): Gif
 
-
-
     companion object{
        private const val QUERY_PARAM_LIMIT = "limit"
        private const val QUERY_PARAM_OFFSET = "offset"

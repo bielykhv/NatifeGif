@@ -9,6 +9,4 @@ class Gif {
     @SerializedName("data")
     @Expose
     var data: List<Datum>? = null
-
-
 }

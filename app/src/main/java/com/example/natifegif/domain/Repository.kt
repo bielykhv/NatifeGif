@@ -13,5 +13,4 @@ interface Repository {
     suspend fun getDeletedGifListFromDb(): List<GifData>
     suspend fun getDataFromNet(count: String, offset: String): Gif
     suspend fun getAllFilteredGifs(name: String): List<GifData>
-
 }

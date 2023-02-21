@@ -6,5 +6,4 @@ class DeleteGifFromDataBaseUseCase @Inject constructor(private val repository: R
          suspend fun deleteGifFormDb(id:String){
              repository.deleteGif(id)
          }
-
 }

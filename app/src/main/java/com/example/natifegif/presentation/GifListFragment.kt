@@ -45,7 +45,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
         super.onAttach(context)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,8 +75,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                 }
             }
         }
-
-
     }
 
     private fun init() {
@@ -86,7 +83,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
             recView.layoutManager = LinearLayoutManager(requireContext())
             recView.adapter = adapter
             setupSwipeListener(recView)
-
         }
     }
 
@@ -94,7 +90,7 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
         binding.apply {
             fragToolbar.inflateMenu(R.menu.frag_tool_menu)
             val findItem = fragToolbar.menu.findItem(R.id.new_item)
-            edText = findItem.actionView?.findViewById(R.id.findGif) as EditText
+            edText = findItem.actionView?.findViewById(R.id.findGif) as? EditText
             findItem.setOnActionExpandListener(expandActionView())
             textWatcher = textWatcher()
         }
@@ -106,7 +102,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                 edText?.addTextChangedListener(textWatcher)
               return true
             }
-
             override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
                 edText?.removeTextChangedListener(textWatcher)
                 edText?.setText("")
@@ -124,7 +119,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
         return object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0 != null) {
                     model.gifList.removeObservers(viewLifecycleOwner)
@@ -135,7 +129,6 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                     state = true
                 }
             }
-
             override fun afterTextChanged(p0: Editable?) {
             }
         }
@@ -145,7 +138,8 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
         recView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(SCROLL_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerView.canScrollVertically(SCROLL_DOWN)
+                    && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (!state) {
                         model.getItem()
                     } else Toast.makeText(
@@ -153,11 +147,9 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                         "You are in search mode",
                         Toast.LENGTH_LONG
                     ).show()
-
                 }
             }
         })
-
     }
 
     override fun onClickItem(gifData: GifData) {
@@ -169,16 +161,12 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
     private fun setupSwipeListener(rvView: RecyclerView) {
         val callback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
+            override fun onChildDraw(c: Canvas,recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
+                dX: Float, dY: Float,actionState: Int, isCurrentlyActive: Boolean
             ) {
-                val trashBinIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_delete_outline_24)
+                val trashBinIcon = ContextCompat.getDrawable(requireContext(),
+                    R.drawable.ic_baseline_delete_outline_24)
                 c.clipRect(dX, viewHolder.itemView.top.toFloat(),
                     viewHolder.itemView.right.toFloat() , viewHolder.itemView.bottom.toFloat())
                 trashBinIcon?.bounds = Rect(
@@ -189,13 +177,7 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                 )
                 trashBinIcon?.draw(c)
 
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
+                super.onChildDraw(c,recyclerView,viewHolder,dX,dY,actionState,
                     isCurrentlyActive
                 )
             }
