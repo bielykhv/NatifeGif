@@ -30,7 +30,7 @@ class RepositoryImpl @Inject constructor(private val apiService: ApiService, pri
         return mainDb.getAllDeleted()
     }
 
-    override suspend fun getDataFromNet(count: String, offset: String): Gif {
+    override suspend fun getDataFromNet(count: Int, offset: Int): Gif {
         return apiService.getByCount(count,offset)
     }
 
