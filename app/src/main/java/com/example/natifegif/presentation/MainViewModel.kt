@@ -29,7 +29,7 @@ class MainViewModel @Inject constructor(
     val gifList: LiveData<List<GifData>> by lazy { getGifListFromDataBaseUseCase.getGifListFromDb().asLiveData() }
     fun getItem() = viewModelScope.launch {
         try {
-            val gif = getDataFromNetUseCase.getDataFromNet("3", offset.toString())
+            val gif = getDataFromNetUseCase.getDataFromNet(3, offset)
             offset += 3
             gif.data?.forEach {
                 val url = it.images?.original?.url

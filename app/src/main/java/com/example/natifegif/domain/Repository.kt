@@ -11,6 +11,6 @@ interface Repository {
     suspend fun insertDeletedGif(deletedItem: DeletedItem)
     fun getListFromDb(): Flow<List<GifData>>
     suspend fun getDeletedGifListFromDb(): List<GifData>
-    suspend fun getDataFromNet(count: String, offset: String): Gif
+    suspend fun getDataFromNet(count: Int, offset: Int): Gif
     suspend fun getAllFilteredGifs(name: String): List<GifData>
 }

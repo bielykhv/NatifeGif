@@ -125,7 +125,7 @@ class GifListFragment : Fragment(), RcAdapter.Listener {
                     model.philterModelList.observe(viewLifecycleOwner) {
                         adapter.submitList(it)
                     }
-                    model.getToDb("%$p0%")
+                    model.getToDb("$p0")
                     state = true
                 }
             }
