@@ -16,8 +16,7 @@ interface Dao {
     suspend fun deleteGif(id: String)
     @Query("SELECT * FROM deleted")
     suspend fun getAllDeleted(): List<GifData>
-//    @Query("SELECT * FROM gif_list WHERE :title = '' OR title LIKE '%' || :title ||'%' ORDER BY title")
-@Query("SELECT * FROM gif_list WHERE title LIKE '%' || :title || '%'")
+    @Query("SELECT * FROM gif_list WHERE title LIKE '%' || :title || '%' ORDER BY title")
     suspend fun getAllFilteredGifs(title: String): List<GifData>
     @Query("SELECT * FROM gif_list")
     fun getAllGifs():Flow<List<GifData>>
