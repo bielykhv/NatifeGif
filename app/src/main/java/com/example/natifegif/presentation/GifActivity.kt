@@ -35,7 +35,7 @@ class GifActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         model = ViewModelProvider(this, viewModelFactory)[ActivityViewModel::class.java]
-        id = intent.getStringExtra("id")!!
+        id = intent.getStringExtra("id").toString()
         model.gifList.observe(this) {
             if (index1 == -1) {
                 for (item in it) {
